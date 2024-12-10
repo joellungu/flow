@@ -342,7 +342,7 @@ class Signup extends GetView<LoginController> {
                               //   "email": email.text,
                               //   "pwd": mdp.text,
                               // };
-                              controller.creerCompte(e);
+                              //controller.creerCompte(e);
                               //Get.off(Accueil());
                               //loginController.deja.value = true;
                             }

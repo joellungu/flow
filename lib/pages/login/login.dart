@@ -194,7 +194,7 @@ class Login extends GetView<LoginController> {
                               //   "email": email.text,
                               //   "pwd": mdp.text,
                               // };
-                              controller.login("00243${num.text}", mdp.text);
+                              //controller.login("00243${num.text}", mdp.text);
                               //
                               //Get.off(Accueil());
                               //loginController.deja.value = true;
