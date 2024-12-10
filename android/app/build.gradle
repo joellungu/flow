@@ -24,12 +24,18 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.flow.flow"
-    compileSdkVersion flutter.compileSdkVersion
-    ndkVersion flutter.ndkVersion
+    compileSdk = 35//flutter.compileSdkVersion
+    ndkVersion = "27.0.12077973" //flutter.ndkVersion
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+        // add this code
+        //coreLibraryDesugaringEnabled true
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17
     }
 
     defaultConfig {
@@ -37,8 +43,8 @@ android {
         applicationId "com.flow.flow"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion 20//flutter.minSdkVersion
-        targetSdkVersion flutter.targetSdkVersion
+        minSdk = 23//flutter.minSdkVersion
+        targetSdk = 35 //flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
