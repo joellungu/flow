@@ -81,8 +81,8 @@ class Signup extends GetView<LoginController> {
                         TextFormField(
                           controller: nom,
                           style: TextStyle(
-                            //fontSize: 25,
-                          ),
+                              //fontSize: 25,
+                              ),
                           validator: (e) {
                             if (e!.isEmpty) {
                               return "Veuilliez inserer votre nom";
@@ -102,7 +102,7 @@ class Signup extends GetView<LoginController> {
                               ),
                               hintText: "Nom d'utilisateur",
                               hintStyle:
-                              TextStyle(color: Colors.grey.shade500)),
+                                  TextStyle(color: Colors.grey.shade500)),
                         ),
                         const SizedBox(
                           height: 20,
@@ -119,20 +119,19 @@ class Signup extends GetView<LoginController> {
                             return null;
                           },
                           decoration: InputDecoration(
-                              fillColor: Colors.grey.shade100,
-                              filled: true,
-                              contentPadding: EdgeInsets.symmetric(vertical: 5),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              prefix: const Text("00243 "),
-                              prefixIcon: Icon(
-                                Icons.phone,
-                                color: HexColor("#2F565D"),
-                              ),
-                              hintText: "Téléphone ex: 00243...",
-                              hintStyle:
-                                  TextStyle(color: Colors.grey.shade500),
+                            fillColor: Colors.grey.shade100,
+                            filled: true,
+                            contentPadding: EdgeInsets.symmetric(vertical: 5),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            prefix: const Text("00243 "),
+                            prefixIcon: Icon(
+                              Icons.phone,
+                              color: HexColor("#2F565D"),
+                            ),
+                            hintText: "Téléphone ex: 00243...",
+                            hintStyle: TextStyle(color: Colors.grey.shade500),
                           ),
                         ),
                         const SizedBox(
@@ -322,9 +321,10 @@ class Signup extends GetView<LoginController> {
 
                               Map e = {
                                 "nomUtilisateur": nom.text,
-                                "telephone": num.text,
-                                "mdp": mdp.text,
-                                "dateNaissance": datenaissance.value,
+                                "numeroDeTelephone": num.text,
+                                "motDePasse": mdp.text,
+                                "dateDeNaissance": datenaissance.value,
+                                "type": "utilisateur",
                               };
                               /**
                                *  public String nom;
