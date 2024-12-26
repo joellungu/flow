@@ -27,21 +27,23 @@ class Splash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-      height: Get.size.height,
-      width: Get.size.width,
-      /*
+      body: Container(
+        height: Get.size.height,
+        width: Get.size.width,
+        /*
           decoration: const BoxDecoration(
           image: DecorationImage(
             image: ExactAssetImage("assets/main logo.png")
           )
         ),
         */
-      child: Center(
+        child: Center(
           child: Image.asset(
-        "assets/main logo.png",
-        width: 200,
-      )),
-    ));
+            "assets/main logo.png",
+            width: 200,
+          ),
+        ),
+      ),
+    );
   }
 }

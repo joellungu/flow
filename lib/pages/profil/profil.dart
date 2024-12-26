@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+import 'infos/infos.dart';
 import 'pioches/pioche.dart';
 
 class Profil extends StatefulWidget {
@@ -33,7 +34,7 @@ class _Profil extends State<Profil> with SingleTickerProviderStateMixin {
   //
   @override
   void initState() {
-    controller = TabController(length: 2, vsync: this);
+    controller = TabController(length: 3, vsync: this);
     super.initState();
     //
     user = box.read("user") ?? {};
@@ -107,7 +108,7 @@ class _Profil extends State<Profil> with SingleTickerProviderStateMixin {
                                 height: 10,
                               ),
                               Text(
-                                "${user['nomUtilisateur']}",
+                                "${user['nom']} ${user['postnom']} ${user['prenom']}",
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -120,77 +121,73 @@ class _Profil extends State<Profil> with SingleTickerProviderStateMixin {
                       ),
                       Expanded(
                         flex: 3,
-                        child: Container(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    height: 50,
-                                    width: 50,
-                                    child: Stack(
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                            top: 5,
-                                          ),
-                                          child: InkWell(
-                                            onTap: () {},
-                                            child: SvgPicture.asset(
-                                              "assets/IcBaselinePoll.svg",
-                                              colorFilter:
-                                                  const ColorFilter.mode(
-                                                      Colors.white,
-                                                      BlendMode.srcIn),
-
-                                              //semanticsLabel: e["titre"],
-                                              height: 30,
-                                              width: 30,
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.only(),
-                                          child: Align(
-                                            alignment: Alignment.bottomRight,
-                                            child: Card(
-                                              elevation: 2,
-                                              color: HexColor("#2F565D"),
-                                              child: Container(
-                                                alignment: Alignment.center,
-                                                height: 20,
-                                                width: 20,
-                                                child: Text(
-                                                  "5",
-                                                  style: TextStyle(
-                                                    color: Colors.grey.shade100,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  InkWell(
-                                    onTap: () {},
-                                    child: SvgPicture.asset(
-                                      "assets/IcBaselineMiscellaneousServices.svg",
-                                      colorFilter: ColorFilter.mode(
-                                          Colors.white, BlendMode.srcIn),
-
-                                      //semanticsLabel: e["titre"],
-                                      height: 30,
-                                      width: 30,
-                                    ),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.center,
+                            //   children: [
+                            //     // Container(
+                            //     //   height: 50,
+                            //     //   width: 50,
+                            //     //   child: Stack(
+                            //     //     children: [
+                            //     //       Padding(
+                            //     //         padding: const EdgeInsets.only(
+                            //     //           top: 5,
+                            //     //         ),
+                            //     //         child: InkWell(
+                            //     //           onTap: () {},
+                            //     //           child: SvgPicture.asset(
+                            //     //             "assets/IcBaselinePoll.svg",
+                            //     //             colorFilter:
+                            //     //                 const ColorFilter.mode(
+                            //     //                     Colors.white,
+                            //     //                     BlendMode.srcIn),
+                            //     //             //semanticsLabel: e["titre"],
+                            //     //             height: 30,
+                            //     //             width: 30,
+                            //     //           ),
+                            //     //         ),
+                            //     //       ),
+                            //     //       Padding(
+                            //     //         padding: EdgeInsets.only(),
+                            //     //         child: Align(
+                            //     //           alignment: Alignment.bottomRight,
+                            //     //           child: Card(
+                            //     //             elevation: 2,
+                            //     //             color: HexColor("#2F565D"),
+                            //     //             child: Container(
+                            //     //               alignment: Alignment.center,
+                            //     //               height: 20,
+                            //     //               width: 20,
+                            //     //               child: Text(
+                            //     //                 "5",
+                            //     //                 style: TextStyle(
+                            //     //                   color: Colors.grey.shade100,
+                            //     //                 ),
+                            //     //               ),
+                            //     //             ),
+                            //     //           ),
+                            //     //         ),
+                            //     //       )
+                            //     //     ],
+                            //     //   ),
+                            //     // ),
+                            //     InkWell(
+                            //       onTap: () {},
+                            //       child: SvgPicture.asset(
+                            //         "assets/IcBaselineMiscellaneousServices.svg",
+                            //         colorFilter: ColorFilter.mode(
+                            //             Colors.white, BlendMode.srcIn),
+                            //         //semanticsLabel: e["titre"],
+                            //         height: 30,
+                            //         width: 30,
+                            //       ),
+                            //     ),
+                            //   ],
+                            // )
+                          ],
                         ),
                       ),
                     ],
@@ -236,10 +233,13 @@ class _Profil extends State<Profil> with SingleTickerProviderStateMixin {
                   ),
                   tabs: const [
                     Tab(
+                      text: "Pioche",
+                    ),
+                    Tab(
                       text: "Loyauté",
                     ),
                     Tab(
-                      text: "Pioche",
+                      text: "Plus",
                     ),
                   ],
                 ),
@@ -249,8 +249,9 @@ class _Profil extends State<Profil> with SingleTickerProviderStateMixin {
                 child: TabBarView(
                   controller: controller,
                   children: [
-                    Loyelty(),
                     Pioche(),
+                    Loyelty(),
+                    Infos(user),
                   ],
                 ),
               )

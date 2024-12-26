@@ -1,4 +1,4 @@
-import 'package:flow/pages/preuves/reclamation.dart';
+import 'package:flow/pages/profil/pioches/preuves/reclamation.dart';
 import 'package:flow/pages/profil/profil_controller.dart';
 import 'package:flow/utils/requete.dart';
 import 'package:flutter/cupertino.dart';
@@ -36,7 +36,7 @@ class Pioche extends GetView<ProfilController> {
           child: InkWell(
             onTap: () {
               //
-              Get.to(reclamation("${deal['id']}"));
+              Get.to(reclamation("${deal['id']}", deal['titreCoupon']));
             },
             child: Container(
               decoration: BoxDecoration(
@@ -53,7 +53,7 @@ class Pioche extends GetView<ProfilController> {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image: NetworkImage(
-                              "${Requete.url}/deal/logo/${deal['id']}"),
+                              "${Requete.url}/deals/photo/${deal['id']}"),
                           fit: BoxFit.cover,
                         ),
                         color: Colors.white,
@@ -86,7 +86,7 @@ class Pioche extends GetView<ProfilController> {
                       ),
                       child: RichText(
                         text: TextSpan(
-                          text: "${deal['titre'] ?? "Simple test"}\n",
+                          text: "${deal['entEmetrice'] ?? ""}\n",
                           style: const TextStyle(
                             color: Colors.black,
                             fontSize: 17,
@@ -94,14 +94,14 @@ class Pioche extends GetView<ProfilController> {
                           ),
                           children: [
                             TextSpan(
-                              text: "${deal['description']}\n",
+                              text: "${deal['titreCoupon']}\n",
                               style: TextStyle(
                                 color: Colors.grey.shade700,
                                 fontSize: 12,
                               ),
                             ),
                             TextSpan(
-                              text: "Exp: ${deal['dateExpiration']}",
+                              text: "Exp: ${deal['dateFin']}",
                               style: TextStyle(
                                 color: HexColor("#4AA6B6"),
                                 fontSize: 11,

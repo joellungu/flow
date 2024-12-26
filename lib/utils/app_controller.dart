@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flow/utils/requete.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -32,7 +33,7 @@ class AppController extends GetxController with StateMixin<List> {
     //var response = await http.post(Uri.parse("${Requete.url}/balise"),
     //  body: json.encode(data));
     //
-    Response response = await requete.postE("balise", data);
+    http.Response response = await requete.postE("balise", data);
     //
     if (response.statusCode == 200 ||
         response.statusCode == 200 ||
@@ -79,9 +80,9 @@ class AppController extends GetxController with StateMixin<List> {
   //
   enregistrementAppareils(Map device) async {
     //
-    Response response = await requete.postE("balise/save", device);
+    http.Response response = await requete.postE("balise/save", device);
     //
-    if (response.isOk) {
+    if (checkRep(response)) {
       //
       Get.back();
       Get.snackbar("Succès", "Youpiiiii");
@@ -94,11 +95,11 @@ class AppController extends GetxController with StateMixin<List> {
   //
   Future<void> getAllDevices2(List devs) async {
     //
-    Response response = await requete.postE("balise", devs);
+    http.Response response = await requete.postE("balise", devs);
     //
-    if (response.isOk) {
+    if (checkRep(response)) {
       //
-      List devices = response.body;
+      List devices = jsonDecode(response.body);
       //
       devices.forEach((device) {
         //
@@ -133,7 +134,7 @@ class AppController extends GetxController with StateMixin<List> {
         //
       });
       //
-      return response.body;
+      return jsonDecode(response.body);
     }
   }
 
@@ -142,10 +143,10 @@ class AppController extends GetxController with StateMixin<List> {
     //
     String? idTelephone = await PlatformDeviceId.getDeviceId;
     //
-    Response response = await requete
+    http.Response response = await requete
         .getE("publicite/vue?idPub=$idPub&idtelephone=$idTelephone");
     //
-    if (response.isOk) {
+    if (checkRep(response)) {
       //
       print("Rep 1: ${response.statusCode}");
       print("Rep 1: ${response.body}");
@@ -163,10 +164,10 @@ class AppController extends GetxController with StateMixin<List> {
     //
     String? idTelephone = await PlatformDeviceId.getDeviceId;
     //
-    Response response = await requete
+    http.Response response = await requete
         .getE("publicite/ouvert?idPub=$idPub&idtelephone=$idTelephone");
     //
-    if (response.isOk) {
+    if (checkRep(response)) {
       //
       print("Rep 1: ${response.statusCode}");
       print("Rep 1: ${response.body}");
@@ -196,9 +197,9 @@ class AppController extends GetxController with StateMixin<List> {
       "tokenFb": "cricket-6dd43-firebase-adminsdk-f1a8a-f842fa0876",
     };
     //
-    Response response = await requete.postE("utilisateur", e);
+    http.Response response = await requete.postE("utilisateur", e);
     //
-    if (response.isOk) {
+    if (checkRep(response)) {
       //
       print("Rep 1: ${response.statusCode}");
       print("Rep 1: ${response.body}");
@@ -209,6 +210,14 @@ class AppController extends GetxController with StateMixin<List> {
       print("Rep 2: ${response.body}");
       //
     }
+  }
+
+  checkRep(http.Response response) {
+    return (response.statusCode == 200 ||
+        response.statusCode == 201 ||
+        response.statusCode == 202 ||
+        response.statusCode == 203 ||
+        response.statusCode == 204);
   }
 
   //

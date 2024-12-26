@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:flow/pages/preuves/preuve_controller.dart';
+import 'package:flow/pages/profil/pioches/preuves/preuve_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
@@ -10,11 +10,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:photo_view/photo_view.dart';
 
-class reclamation extends GetView<PreuveController> {
-  //
-  String iddeal;
-  //
-  reclamation(this.iddeal);
+class Preuve extends GetView<PreuveController> {
   //
   RxList photos = [].obs;
   //
@@ -26,7 +22,7 @@ class reclamation extends GetView<PreuveController> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Reclamation",
+          "Facture",
           style: TextStyle(
             color: Colors.white,
           ),
@@ -161,41 +157,43 @@ class reclamation extends GetView<PreuveController> {
                 //
                 Map facture = {
                   "idClient": user['id'],
-                  "iddeal": iddeal,
+                  "idBoutique": 0,
                   "idVerificateur": 0,
                   "photos": liste,
                   "dateCapture": date,
                   "status": false,
                 };
+                /**
+                 * public Long idClient;
+    public Long idVerificateur;
+    @ElementCollection
+    public List<byte[]> photos;
+    public LocalDateTime dateCapture;
+    //public byte[] photo;
+    public boolean status;
+    public double prix;
+    public String devise;
+    public int qtPoint;
+                 */
                 //
                 bool v = await controller.envoiePreuve(facture);
+                //
                 if (v) {
-                  var box = GetStorage();
                   //
-                  List pioches = box.read("pioches") ?? [];
+                } else {
                   //
-                  for (int t = 0; t < pioches.length; t++) {
-                    if (pioches[t]["id"] == iddeal) {
-                      pioches.removeAt(t); //
-                    }
-                  }
-
-                  //
-                  box.write("pioches", pioches);
                 }
               },
-              style: ButtonStyle(
-                elevation: MaterialStateProperty.all(2),
-                fixedSize: MaterialStateProperty.all(
-                  Size(
-                    double.maxFinite,
-                    45,
-                  ),
+              style: ElevatedButton.styleFrom(
+                elevation: 1,
+                fixedSize: const Size(
+                  double.maxFinite,
+                  45,
                 ),
-                shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
-                )),
-                backgroundColor: MaterialStateProperty.all(HexColor("#2F565D")),
+                ),
+                backgroundColor: HexColor("#4AA6B6"),
               ),
               child: const Text(
                 "Envoyer",

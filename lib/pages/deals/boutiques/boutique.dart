@@ -1,6 +1,8 @@
+import 'package:flow/utils/requete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 import 'boutique_controller.dart';
@@ -11,135 +13,236 @@ class Boutique extends GetView<BoutiqueController> {
     controller.getAllDeals();
   }
   //
+  var box = GetStorage();
+  //
   @override
   Widget build(BuildContext context) {
-    return controller.obx(
-      (state) {
+    return FutureBuilder(
+      future: controller.getAllDeals(),
+      builder: (c, t) {
         //
-        List deals = state!;
-        //
-        return ListView(
-          padding: EdgeInsets.all(10),
-          children: List.generate(deals.length, (index) {
-            //
-            Map deal = deals[index];
-            //
-            return Card(
-              elevation: 1,
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                height: 80,
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 3,
-                      child: Center(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(
-                              color: HexColor("#4AA6B6"),
-                            ),
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              bottomLeft: Radius.circular(10),
-                              bottomRight: Radius.circular(0),
-                              topRight: Radius.circular(0),
+        if (t.hasData) {
+          List deals = t.data as List;
+          //
+          return ListView(
+            padding: EdgeInsets.all(10),
+            children: List.generate(deals.length, (index) {
+              //
+              Map deal = deals[index];
+              print('deal... $deal');
+              //
+              List pioches = box.read("pioches") ?? [];
+              Map utilisateur = box.read("user") ?? {};
+              //
+              RxBool deja = false.obs;
+              //
+              for (Map e in pioches) {
+                //
+                if (e['id'] == deal['id']) {
+                  deja.value = true;
+                  break;
+                }
+              }
+              //
+              if (deal['type'] == 1) {
+                return Card(
+                  elevation: 1,
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    height: 80,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 3,
+                          child: Center(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                      "${Requete.url}/deals/photo/${deal['id']}"),
+                                  fit: BoxFit.cover,
+                                ),
+                                color: Colors.white,
+                                border: Border.all(
+                                  color: HexColor("#4AA6B6"),
+                                ),
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  bottomLeft: Radius.circular(10),
+                                  bottomRight: Radius.circular(0),
+                                  topRight: Radius.circular(0),
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 7,
-                      child: Container(
-                        padding: EdgeInsets.all(3),
-                        child: RichText(
-                          text: TextSpan(
-                              text: "Lacoste\n",
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              children: [
-                                TextSpan(
-                                  text: "Buy Lacoste and get 500 pepites\n\n",
-                                  style: TextStyle(
-                                    color: Colors.grey.shade700,
-                                    fontSize: 12,
+                        Expanded(
+                          flex: 7,
+                          child: Container(
+                            padding: EdgeInsets.all(3),
+                            child: RichText(
+                              text: TextSpan(
+                                  text: "${deal['entEmetrice']}\n",
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                ),
-                                TextSpan(
-                                  text: "Exp: 08/08/2023",
-                                  style: TextStyle(
-                                    color: HexColor("#4AA6B6"),
-                                    fontSize: 11,
-                                  ),
-                                ),
-                              ]),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 4,
-                      child: Container(
-                        padding: const EdgeInsets.all(3),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.star,
-                                color: Colors.grey,
-                              ),
+                                  children: [
+                                    TextSpan(
+                                      text: "${deal['titreCoupon']}\n\n",
+                                      style: TextStyle(
+                                        color: Colors.grey.shade700,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: "Exp: ${deal['dateFin']}",
+                                      style: TextStyle(
+                                        color: HexColor("#4AA6B6"),
+                                        fontSize: 11,
+                                      ),
+                                    ),
+                                  ]),
                             ),
-                            Container(
-                              height: 25,
-                              alignment: Alignment.center,
-                              child: Text(
-                                "1500 Ppt",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 17,
-                                  color: HexColor("#4AA6B6"),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 4,
+                          child: Container(
+                            padding: const EdgeInsets.all(3),
+                            decoration: BoxDecoration(
+                              //color: Colors.lightBlue,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                IconButton(
+                                  onPressed: () {
+                                    //
+                                    Set listeUnique = pioches.toSet();
+                                    //
+                                    //print("listeUnique: $listeUnique");
+                                    //
+                                    if (!deja.value) {
+                                      //
+                                      deja.value = true;
+                                      //
+                                      pioches.add(deal);
+                                      //
+                                      //pioches = listeUnique.toList(); //.add(deal);
+                                      /**
+                                       *  numeroDeTelephone;
+                                          public Long idDeal;
+                                          public String dateHeure
+                                       */
+                                      DateTime d = DateTime.now();
+                                      //
+                                      controller.getPioche({
+                                        "numeroDeTelephone":
+                                            utilisateur['numeroDeTelephone'],
+                                        "idDeal": deal['id'],
+                                        "idEntreprise": 0,
+                                        "dateHeure":
+                                            "${d.day}-${d.month}-${d.year} ${d.hour}:${d.minute}",
+                                      });
+                                      box.write("pioches", pioches);
+                                      //
+                                      Get.dialog(
+                                        Center(
+                                          child: Card(
+                                            elevation: 1,
+                                            child: Container(
+                                              height: 300,
+                                              width: 300,
+                                              alignment: Alignment.center,
+                                              child: Container(
+                                                height: 100,
+                                                width: 100,
+                                                decoration: BoxDecoration(
+                                                  color: HexColor("#4AA6B6"),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                    50,
+                                                  ),
+                                                ),
+                                                child: const Icon(
+                                                  Icons.check_circle,
+                                                  color: Colors.white,
+                                                  size: 100,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    } else {
+                                      Get.snackbar(
+                                        "Oups",
+                                        "Déjà pioché",
+                                        backgroundColor: Colors.red.shade700,
+                                      );
+                                    }
+                                  },
+                                  icon: Obx(
+                                    () => deja.value
+                                        ? Icon(
+                                            Icons.star,
+                                            color: Colors.yellow.shade700,
+                                          )
+                                        : Icon(
+                                            Icons.star,
+                                            color: Colors.grey,
+                                          ),
+                                  ),
                                 ),
-                              ),
-                              decoration: BoxDecoration(
-                                //color: HexColor("#4AA6B6"), //Colors.blue,
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                            )
-                          ],
+                                Container(
+                                  height: 25,
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    "${deal['points']} Ppt",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17,
+                                      color: HexColor("#4AA6B6"),
+                                    ),
+                                  ),
+                                  decoration: BoxDecoration(
+                                    //color: HexColor("#4AA6B6"), //Colors.blue,
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
                         ),
-                        decoration: BoxDecoration(
-                          //color: Colors.lightBlue,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-            );
-          }),
+                  ),
+                );
+              } else {
+                return Container();
+              }
+            }),
+          );
+        } else if (t.hasError) {
+          return Container();
+        }
+        return Center(
+          child: Container(
+            height: 40,
+            width: 40,
+            child: CircularProgressIndicator(),
+          ),
         );
       },
-      onEmpty: Container(),
-      onLoading: Center(
-        child: SizedBox(
-          height: 40,
-          width: 40,
-          child: CircularProgressIndicator(),
-        ),
-      ),
     );
   }
 }

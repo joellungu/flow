@@ -25,7 +25,8 @@ import 'pages/deals/boutiques/boutique_controller.dart';
 import 'pages/deals/gens/gens_controller.dart';
 import 'pages/deals/marques/marque_controller.dart';
 import 'pages/login/login_controller.dart';
-import 'pages/preuves/preuve_controller.dart';
+import 'pages/pepites/pepite_controller.dart';
+import 'pages/profil/pioches/preuves/preuve_controller.dart';
 import 'pages/vouchers/voucher_controller.dart';
 import 'utils/app_controller.dart';
 import 'utils/scan_util.dart';
@@ -102,11 +103,6 @@ void main() async {
   await GetStorage.init();
   //
   //
-  WidgetsFlutterBinding.ensureInitialized();
-  //
-  await GetStorage.init();
-  //
-  //
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -153,6 +149,8 @@ void main() async {
   ContactsController controller = Get.put(ContactsController());
   //
   PaiementController paiementController = Get.put(PaiementController());
+  //
+  Get.put(PepiteController());
   //
   runApp(const Flow());
 }
@@ -288,6 +286,7 @@ class _Flow extends State<Flow> {
         appBarTheme: AppBarTheme(
           elevation: 1,
           backgroundColor: HexColor("#4AA6B6"),
+
           //HexColor("#2F565D")
         ),
         useMaterial3: true,
