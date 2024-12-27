@@ -176,13 +176,13 @@ class Preuve extends GetView<PreuveController> {
     public int qtPoint;
                  */
                 //
-                bool v = await controller.envoiePreuve(facture);
-                //
-                if (v) {
-                  //
-                } else {
-                  //
-                }
+                // Map v = await controller.envoiePreuve(facture);
+                // //
+                // if (v['status]) {
+                //   //
+                // } else {
+                //   //
+                // }
               },
               style: ElevatedButton.styleFrom(
                 elevation: 1,

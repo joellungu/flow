@@ -184,12 +184,13 @@ class reclamation extends GetView<PreuveController> {
                   "code": code,
                   "statut": "",
                 };
+                print("facture: $facture");
                 //
                 if (liste.isNotEmpty) {
                   //
-                  bool v = await controller.envoiePreuve(facture);
+                  Map v = await controller.envoiePreuve(facture);
                   //
-                  if (v) {
+                  if (v['status']) {
                     var box = GetStorage();
                     //
                     List pioches = box.read("pioches") ?? [];
@@ -236,7 +237,7 @@ class reclamation extends GetView<PreuveController> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
+                                const Text(
                                   "Oups",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
@@ -245,9 +246,9 @@ class reclamation extends GetView<PreuveController> {
                                   ),
                                 ),
                                 Text(
-                                  "Nous n'avons pas pu envoyer la facture au serveur.",
+                                  "${v['message']}",
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.normal,
                                     fontSize: 15,
                                   ),
@@ -271,7 +272,7 @@ class reclamation extends GetView<PreuveController> {
                                           //
                                           Get.back();
                                         },
-                                        child: Text(
+                                        child: const Text(
                                           " Ok ",
                                           style: TextStyle(
                                             color: Colors.white,

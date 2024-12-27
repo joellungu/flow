@@ -22,6 +22,7 @@ import 'firebase_options.dart';
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'pages/deals/boutiques/boutique_controller.dart';
+import 'pages/deals/deal_controller.dart';
 import 'pages/deals/gens/gens_controller.dart';
 import 'pages/deals/marques/marque_controller.dart';
 import 'pages/login/login_controller.dart';
@@ -134,23 +135,25 @@ void main() async {
     WakelockPlus.enable();
     //await setupFlutterNotifications();
   }
-  VoucherController voucherController = Get.put(VoucherController());
+  Get.put(VoucherController());
   //
-  LoginController loginController = Get.put(LoginController());
+  Get.put(LoginController());
   //
-  PreuveController preuveController = Get.put(PreuveController());
+  Get.put(PreuveController());
   //
-  BoutiqueController boutiqueController = Get.put(BoutiqueController());
+  Get.put(BoutiqueController());
   //
-  GensController gensController = Get.put(GensController());
+  Get.put(GensController());
   //
-  MarqueController marqueController = Get.put(MarqueController());
+  Get.put(MarqueController());
   //
-  ContactsController controller = Get.put(ContactsController());
+  Get.put(ContactsController());
   //
-  PaiementController paiementController = Get.put(PaiementController());
+  Get.put(PaiementController());
   //
   Get.put(PepiteController());
+  //
+  Get.put(DealController());
   //
   runApp(const Flow());
 }

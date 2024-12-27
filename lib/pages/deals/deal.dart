@@ -1,3 +1,7 @@
+import 'dart:async';
+
+import 'package:card_swiper/card_swiper.dart';
+import 'package:flow/utils/requete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
@@ -23,7 +27,11 @@ class _Deal extends State<Deal> with SingleTickerProviderStateMixin {
   //
   TabController? controller;
   //
-  //CourseController courseController = Get.find();
+  PageController pageController = PageController();
+  //
+  DealController dealController = Get.find();
+  //
+  Timer? temps;
   //
   @override
   void initState() {
@@ -40,6 +48,15 @@ class _Deal extends State<Deal> with SingleTickerProviderStateMixin {
       //print("La valeur: ${controller!.index}");
       //courseController.getAllCoures(controller!.index + 1);
     });
+    //
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    //
+    //temps!.cancel();
   }
 
   //
@@ -68,21 +85,70 @@ class _Deal extends State<Deal> with SingleTickerProviderStateMixin {
                 margin: EdgeInsets.zero,
                 elevation: 0,
                 shape: RoundedRectangleBorder(),
-                child: Container(
-                  height: 120,
-                  alignment: Alignment.center,
-                  child: Text(
-                    "Acheter chez KIN-MARCHE une surprise vous attends",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.normal,
-                      fontSize: 30,
-                      color: Colors.grey.shade100,
-                    ),
-                  ),
-                  decoration: BoxDecoration(
-                    color: HexColor("#4AA6B6"),
-                  ),
+                child: FutureBuilder(
+                  future: dealController.getAllPubs(),
+                  builder: (c, t) {
+                    if (t.hasData) {
+                      List pubs = t.data as List;
+                      // Timer(const Duration(seconds: 3), () async {
+                      //   //
+                      //   temps = Timer.periodic(const Duration(seconds: 2), (t) {
+                      //     //
+                      //     pageController.nextPage(
+                      //         duration: const Duration(milliseconds: 300),
+                      //         curve: Curves.linear);
+                      //   });
+                      // });
+                      //
+                      return Container(
+                        height: 180,
+                        width: double.maxFinite,
+                        alignment: Alignment.center,
+                        child: Swiper(
+                          //duration: 1,
+                          //autoplayDelay: 1,
+                          allowImplicitScrolling: true,
+                          autoplay: true,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                      "${Requete.url}/pubs/${pubs[index]}"),
+                                  fit: BoxFit.cover,
+                                ),
+                                color: Colors.white,
+                                border: Border.all(
+                                  color: HexColor("#4AA6B6"),
+                                ),
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  bottomLeft: Radius.circular(10),
+                                  bottomRight: Radius.circular(10),
+                                  topRight: Radius.circular(10),
+                                ),
+                              ),
+                            );
+                          },
+                          itemCount: pubs.length,
+                          pagination: SwiperPagination(),
+                          control: SwiperControl(size: 0),
+                        ),
+                      );
+                    } else if (t.hasError) {
+                      return Container(
+                        alignment: Alignment.center,
+                        child: Text("..."),
+                      );
+                    }
+                    return Center(
+                      child: Container(
+                        height: 40,
+                        width: 40,
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  },
                 ),
               ),
               Container(
@@ -163,4 +229,6 @@ class _Deal extends State<Deal> with SingleTickerProviderStateMixin {
       ),
     );
   }
+
+  //
 }

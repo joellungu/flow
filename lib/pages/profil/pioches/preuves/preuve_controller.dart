@@ -8,7 +8,7 @@ class PreuveController extends GetxController {
   //
   Requete requete = Requete();
   //
-  Future<bool> envoiePreuve(Map fac) async {
+  Future<Map> envoiePreuve(Map fac) async {
     //
     http.Response response = await requete.postE("deals/deal", fac);
     if (checkRep(response)) {
@@ -20,7 +20,7 @@ class PreuveController extends GetxController {
       //   backgroundColor: HexColor("#4AA6B6"),
       //   colorText: Colors.white,
       // );
-      return true;
+      return {"status": true, "message": response.body};
     } else {
       //
       Get.back();
@@ -34,7 +34,7 @@ class PreuveController extends GetxController {
       //   backgroundColor: Colors.red,
       //   colorText: Colors.white,
       // );
-      return false;
+      return {"status": false, "message": response.body};
     }
   }
 
