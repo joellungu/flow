@@ -108,7 +108,7 @@ class _Profil extends State<Profil> with SingleTickerProviderStateMixin {
                                 height: 10,
                               ),
                               Text(
-                                "${user['nom']} ${user['postnom']} ${user['prenom']}",
+                                "${user['nom']}",
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,

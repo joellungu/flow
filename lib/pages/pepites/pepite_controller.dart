@@ -26,6 +26,23 @@ class PepiteController extends GetxController with StateMixin<List> {
   }
 
   //
+  Future<List> getPiochesHistorique(String telephone) async {
+    //
+    http.Response response =
+        await requete.getE("pioches/historique/$telephone");
+    //
+    if (checkRep(response)) {
+      print("rep1: ${response.statusCode}");
+      print("rep1: ${response.body}");
+      //
+      return jsonDecode(response.body);
+    } else {
+      //
+      return [];
+    }
+  }
+
+  //
   Future<String> echange(String numeroDeTelephone, int idEntreprise,
       double quantite, String devise) async {
     //echange?numeroDeTelephone=815381693&idEntreprise=1&quantite=0.5&devise=USD

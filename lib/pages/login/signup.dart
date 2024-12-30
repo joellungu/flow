@@ -333,7 +333,7 @@ class Signup extends GetView<LoginController> {
                                   );
 
                                   Map e = {
-                                    "nomUtilisateur": nom.text,
+                                    "nom": nom.text,
                                     "numeroDeTelephone": num.text,
                                     "motDePasse": mdp.text,
                                     "dateDeNaissance": datenaissance.value,
