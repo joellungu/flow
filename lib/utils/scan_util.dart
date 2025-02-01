@@ -182,7 +182,7 @@ class ScanUtil {
     var box = GetStorage();
     //
     List devs = box.read("devs") ?? [];
-    box.write("devs", []);
+
     //
     print("La liste de appareil: $devs");
     // devs.forEach((device) {
@@ -195,5 +195,7 @@ class ScanUtil {
     // });
     //
     controller.getAllDevices(token, devs);
+    //
+    box.write("devs", []);
   }
 }

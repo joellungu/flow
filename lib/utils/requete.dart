@@ -16,7 +16,8 @@ class Requete extends GetConnect {
   //
   Map<String, String> headers = {'Content-Type': 'application/json'};
   //
-  static String urlCricket = "http://192.168.100.253:8080";
+  //static String urlCricket = "http://192.168.100.253:8080";
+  static String urlCricket = "https://cricketserver-5f8fa4dbc848.herokuapp.com";
   //
   //static String url = "http://192.168.100.27:8080";
   //static String url = "http://192.168.1.185/www/sursa";
@@ -40,6 +41,31 @@ class Requete extends GetConnect {
   Future<http.Response> deleteE(String path) async {
     return http.delete(
       Uri.parse("$url/$path"),
+      headers: headers,
+    );
+  }
+
+  //
+  Future<http.Response> getEc(String path) async {
+    return http.get(
+      Uri.parse("$urlCricket/$path"),
+      headers: headers,
+    );
+  }
+
+  Future<http.Response> postEc(String path, var e) async {
+    return http.post(Uri.parse("$urlCricket/$path"),
+        headers: headers, body: jsonEncode(e));
+  }
+
+  Future<http.Response> putEc(String path, var e) async {
+    return http.put(Uri.parse("$urlCricket/$path"),
+        headers: headers, body: jsonEncode(e));
+  }
+
+  Future<http.Response> deleteEc(String path) async {
+    return http.delete(
+      Uri.parse("$urlCricket/$path"),
       headers: headers,
     );
   }

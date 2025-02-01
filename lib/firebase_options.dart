@@ -85,4 +85,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'flow-22824.firebasestorage.app',
     measurementId: 'G-34R825E3TW',
   );
+
 }

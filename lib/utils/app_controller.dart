@@ -26,26 +26,27 @@ class AppController extends GetxController with StateMixin<List> {
     Map data = {
       "idTelephone": idTelephone,
       "token": token,
-      "tokenFb": "cricket-6dd43-firebase-adminsdk-f1a8a-f842fa0876",
+      "tokenFb": "flow-22824-firebase-adminsdk-130po-26108614e7",
       "devices": devices,
     };
     //
     //var response = await http.post(Uri.parse("${Requete.url}/balise"),
     //  body: json.encode(data));
     //
-    http.Response response = await requete.postE("balise", data);
+    http.Response response = await requete.postEc("balise", data);
     //
     if (response.statusCode == 200 ||
         response.statusCode == 200 ||
         response.statusCode == 204) {
       //
-      print("rep1: ${response.statusCode}");
-      print("rep1: ${response.body}");
+      print("-rep1::: $data}");
+      print("-rep1::: ${response.statusCode}");
+      print("-rep1::: ${response.body}");
       //
       //return json.decode(response.body);
     } else {
-      print("rep2: ${response.statusCode}");
-      print("rep2: ${response.body}");
+      print("-rep2::: ${response.statusCode}");
+      print("-rep2::: ${response.body}");
       //return [];
       //Get.snackbar("Oups", "problème lors de l'enregistrement");
     }
@@ -59,7 +60,7 @@ class AppController extends GetxController with StateMixin<List> {
   setNotification(Map device) async {
     //idPub
     Uint8List img = await getImageBytes(
-        "${Requete.url}/publicite/photo?id=${device['idPub']}");
+        "${Requete.urlCricket}/publicite/photo?id=${device['idPub']}");
     //${Requete.urlSt}publicite/photo?id=${pub['id']}
     //https://picsum.photos/id/237/200/300
     AndroidBitmap<Object> androidBitmap = ByteArrayAndroidBitmap(img);
@@ -80,7 +81,7 @@ class AppController extends GetxController with StateMixin<List> {
   //
   enregistrementAppareils(Map device) async {
     //
-    http.Response response = await requete.postE("balise/save", device);
+    http.Response response = await requete.postEc("balise/save", device);
     //
     if (checkRep(response)) {
       //
@@ -95,7 +96,7 @@ class AppController extends GetxController with StateMixin<List> {
   //
   Future<void> getAllDevices2(List devs) async {
     //
-    http.Response response = await requete.postE("balise", devs);
+    http.Response response = await requete.postEc("balise", devs);
     //
     if (checkRep(response)) {
       //
@@ -144,7 +145,7 @@ class AppController extends GetxController with StateMixin<List> {
     String? idTelephone = await PlatformDeviceId.getDeviceId;
     //
     http.Response response = await requete
-        .getE("publicite/vue?idPub=$idPub&idtelephone=$idTelephone");
+        .getEc("publicite/vue?idPub=$idPub&idtelephone=$idTelephone");
     //
     if (checkRep(response)) {
       //
@@ -165,7 +166,7 @@ class AppController extends GetxController with StateMixin<List> {
     String? idTelephone = await PlatformDeviceId.getDeviceId;
     //
     http.Response response = await requete
-        .getE("publicite/ouvert?idPub=$idPub&idtelephone=$idTelephone");
+        .getEc("publicite/ouvert?idPub=$idPub&idtelephone=$idTelephone");
     //
     if (checkRep(response)) {
       //
@@ -194,10 +195,10 @@ class AppController extends GetxController with StateMixin<List> {
     Map e = {
       "device": ids!,
       "token": token,
-      "tokenFb": "cricket-6dd43-firebase-adminsdk-f1a8a-f842fa0876",
+      "tokenFb": "flow-22824-firebase-adminsdk-130po-26108614e7",
     };
     //
-    http.Response response = await requete.postE("utilisateur", e);
+    http.Response response = await requete.postEc("utilisateur", e);
     //
     if (checkRep(response)) {
       //

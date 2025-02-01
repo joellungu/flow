@@ -131,9 +131,9 @@ class LocalNotificationService {
               styleInformation: BigPictureStyleInformation(
                 androidBitmap,
                 hideExpandedLargeIcon: false,
-                contentTitle: 'overridden <b>big</b> content title',
+                contentTitle: message['titre'],
                 htmlFormatContentTitle: true,
-                summaryText: 'summary <i>text</i>',
+                summaryText: message['description'],
                 htmlFormatSummaryText: true,
               ),
 
@@ -173,9 +173,9 @@ class LocalNotificationService {
               styleInformation: BigPictureStyleInformation(
                 androidBitmap,
                 hideExpandedLargeIcon: false,
-                contentTitle: 'overridden <b>big</b> content title',
+                contentTitle: message['titre'],
                 htmlFormatContentTitle: true,
-                summaryText: 'summary <i>text</i>',
+                summaryText: message['description'],
                 htmlFormatSummaryText: true,
               ),
               actions: [
