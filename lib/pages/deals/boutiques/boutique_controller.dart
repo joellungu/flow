@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flow/utils/requete.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 
 class BoutiqueController extends GetxController with StateMixin<List> {
   //
@@ -15,13 +14,13 @@ class BoutiqueController extends GetxController with StateMixin<List> {
     //change([], status: RxStatus.loading());
     //
     String boutique = "boutique";
-    http.Response response = await requete.getE("deals");
+    Response response = await requete.getE("deals");
     //
     if (checkRep(response)) {
       print("rep: ${response.statusCode}");
       print("rep: ${response.body}");
       //
-      return jsonDecode(response.body);
+      return response.body;
     } else {
       //
       print("rep: ${response.statusCode}");
@@ -40,7 +39,7 @@ class BoutiqueController extends GetxController with StateMixin<List> {
     //change([], status: RxStatus.loading());
     //
     String boutique = "boutique";
-    http.Response response = await requete.postE("pioches", pioche);
+    Response response = await requete.postE("pioches", pioche);
     //
     if (checkRep(response)) {
       print("rep: ${response.statusCode}");
@@ -53,7 +52,7 @@ class BoutiqueController extends GetxController with StateMixin<List> {
   }
 
   //
-  checkRep(http.Response response) {
+  checkRep(Response response) {
     return (response.statusCode == 200 ||
         response.statusCode == 201 ||
         response.statusCode == 202 ||

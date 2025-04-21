@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:http/http.dart' as http;
+//
 
 class ShowEntreprise extends StatelessWidget {
   RxString entreprise;
@@ -116,14 +116,14 @@ class ShowEntreprise extends StatelessWidget {
     //
     Requete requete = Requete();
     //
-    http.Response response = await requete.getE("entreprises");
+    Response response = await requete.getE("entreprises");
     //
     if (response.statusCode == 200 ||
         response.statusCode == 201 ||
         response.statusCode == 202 ||
         response.statusCode == 203 ||
         response.statusCode == 204) {
-      return jsonDecode(response.body);
+      return response.body;
     } else {
       //
       return [];

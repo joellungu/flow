@@ -4,7 +4,6 @@ import 'package:flow/pages/accueil.dart';
 import 'package:flow/utils/requete.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:http/http.dart' as http;
 
 class LoginController extends GetxController {
   //
@@ -14,11 +13,11 @@ class LoginController extends GetxController {
   //
   creerCompte(Map e) async {
     //
-    http.Response response = await requete.postE("utilisateurs", e);
+    Response response = await requete.postE("utilisateurs", e);
     //
     if (checkRep(response)) {
       //
-      box.write("user", jsonDecode(response.body));
+      box.write("user", response.body);
       //
       Get.back();
       Get.offAll(Accueil());
@@ -33,12 +32,12 @@ class LoginController extends GetxController {
   //
   login(String telephone, String mdp) async {
     //
-    http.Response response = await requete.getE(
+    Response response = await requete.getE(
         "utilisateurs/login?numeroDeTelephone=$telephone&motDePasse=$mdp");
     //
     if (checkRep(response)) {
       //
-      box.write("user", jsonDecode(response.body));
+      box.write("user", response.body);
       //
       Get.back();
       Get.offAll(Accueil());
@@ -50,7 +49,7 @@ class LoginController extends GetxController {
   }
 
   //
-  checkRep(http.Response response) {
+  checkRep(Response response) {
     return (response.statusCode == 200 ||
         response.statusCode == 201 ||
         response.statusCode == 202 ||

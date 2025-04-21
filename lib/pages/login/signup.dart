@@ -316,10 +316,10 @@ class Signup extends GetView<LoginController> {
                             if (termeCondition.value) {
                               if (formKey.currentState!.validate()) {
                                 //Get.off(Accueil());
-                                if (nom.text.isEmpty ||
-                                    num.text.isEmpty ||
-                                    mdp.text.isEmpty ||
-                                    datenaissance.value.isEmpty) {
+                                if (nom.text.isNotEmpty ||
+                                    num.text.isNotEmpty ||
+                                    mdp.text.isNotEmpty ||
+                                    datenaissance.value.isNotEmpty) {
                                   Get.dialog(
                                     Center(
                                       child: Container(

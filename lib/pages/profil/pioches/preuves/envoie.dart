@@ -5,16 +5,17 @@ import 'package:flow/utils/requete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:dio/dio.dart' as d;
 import 'package:get_storage/get_storage.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:dio/dio.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:http/http.dart' as http;
+
 import 'dart:convert';
 import 'dart:math';
 import 'package:percent_indicator/percent_indicator.dart';
 
-final dio = Dio();
+final dio = d.Dio();
 
 class Envois extends StatelessWidget {
   //
@@ -354,21 +355,22 @@ class Envois extends StatelessWidget {
     //print("data: ${jsonEncode(e)}");
     //
     try {
-      var res = await http.post(
-        Uri.parse(
-            "${Requete.url}/deals/image?idDeal=$idDeal&numeroDeTelephone=$numeroDeTelephone&code=$code"),
-        body: e, //e["data"],
-        headers: {
-          "Content-Type": "application/json",
-          //"Authorization": "Bearer ${utilisateur['token']}",
-        },
+      d.Response res = await dio.post(
+          "${Requete.url}/deals/image?idDeal=$idDeal&numeroDeTelephone=$numeroDeTelephone&code=$code",
+          data: e, //e["data"],
+          options: Options(
+            headers: {
+              "Content-Type": "application/json",
+              //"Authorization": "Bearer ${utilisateur['token']}",
+            },
+          )
 
-        // onSendProgress: (int sent, int total) {
-        //   percentage = (sent / total * 100).toStringAsFixed(2);
-        //   pr.value = double.parse(percentage);
-        //   print("::::::::: $percentage ");
-        // },
-      );
+          // onSendProgress: (int sent, int total) {
+          //   percentage = (sent / total * 100).toStringAsFixed(2);
+          //   pr.value = double.parse(percentage);
+          //   print("::::::::: $percentage ");
+          // },
+          );
 
       if (res.statusCode == 200 ||
           res.statusCode == 201 ||

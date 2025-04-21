@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flow/utils/requete.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 
 class DealController extends GetxController with StateMixin<List> {
   //
@@ -11,11 +10,11 @@ class DealController extends GetxController with StateMixin<List> {
   Future<List> getAllPubs() async {
     //
     //
-    http.Response response = await requete.getE("pubs");
+    Response response = await requete.getE("pubs");
     //
     if (checkRep(response)) {
       //
-      return jsonDecode(response.body);
+      return response.body;
     } else {
       //
       return [];
@@ -23,7 +22,7 @@ class DealController extends GetxController with StateMixin<List> {
   }
 
   //
-  checkRep(http.Response response) {
+  checkRep(Response response) {
     return (response.statusCode == 200 ||
         response.statusCode == 201 ||
         response.statusCode == 202 ||

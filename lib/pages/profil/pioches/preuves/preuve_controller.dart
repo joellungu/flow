@@ -2,7 +2,6 @@ import 'package:flow/utils/requete.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:http/http.dart' as http;
 
 class PreuveController extends GetxController {
   //
@@ -10,7 +9,7 @@ class PreuveController extends GetxController {
   //
   Future<Map> envoiePreuve(Map fac) async {
     //
-    http.Response response = await requete.postE("deals/deal", fac);
+    Response response = await requete.postE("deals/deal", fac);
     if (checkRep(response)) {
       //
       Get.back();
@@ -39,7 +38,7 @@ class PreuveController extends GetxController {
   }
 
   //
-  checkRep(http.Response response) {
+  checkRep(Response response) {
     return (response.statusCode == 200 ||
         response.statusCode == 201 ||
         response.statusCode == 202 ||

@@ -7,9 +7,47 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:1077007716902:android:a8d150d54f0aa200048ce7",
+        "android_client_info": {
+          "package_name": "com.example.flow"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7yF-Bry_TO0qhdxPERZZ6isCc67er6q8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:1077007716902:android:e6adf5937409707a048ce7",
         "android_client_info": {
           "package_name": "com.flow.flow"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7yF-Bry_TO0qhdxPERZZ6isCc67er6q8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1077007716902:android:662753d7253e11f7048ce7",
+        "android_client_info": {
+          "package_name": "com.transactus.transactus"
         }
       },
       "oauth_client": [],

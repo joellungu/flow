@@ -24,6 +24,36 @@ class ScanUtil {
   //
   var box = GetStorage();
   //
+  static Future<bool> requestBluetoothPermissions() async {
+    //
+    bool active = false;
+    // Android 12+ nécessite ces permissions séparées
+    Map<Permission, PermissionStatus> statuses = await [
+      Permission.bluetooth,
+      Permission.bluetoothScan,
+      //Permission.bluetoothConnect,
+      //Permission.bluetoothAdvertise,
+    ].request();
+
+    statuses.forEach((permission, status) {
+      if (status.isGranted == "DENIED") {
+        permission.request();
+      }
+      print('$permission: ${status.isGranted ? "GRANTED" : "DENIED"}');
+    });
+
+    if (statuses.values.every((status) => status.isGranted)) {
+      print("✅ Toutes les permissions Bluetooth ont été accordées !");
+      active = true;
+    } else {
+      print("❌ Une ou plusieurs permissions Bluetooth sont refusées.");
+      active = false;
+    }
+
+    return active;
+  }
+
+  //
   static loadBLE() async {
     //
     bluetoothDevices.clear();
@@ -31,9 +61,12 @@ class ScanUtil {
     devs.clear();
     // first, check if bluetooth is supported by your hardware
     // Note: The platform is initialized on the first call to any FlutterBluePlus method.
-    if (await FlutterBluePlus.isSupported == false) {
-      print(":::::: Bluetooth not supported by this device");
-      return;
+    bool v = await requestBluetoothPermissions();
+    if (v) {
+      if (await FlutterBluePlus.isSupported == false) {
+        print(":::::: Bluetooth not supported by this device");
+        return;
+      }
     }
 
 // handle bluetooth on & off
@@ -63,7 +96,7 @@ class ScanUtil {
 // turn on bluetooth ourself if we can
 // for iOS, the user controls bluetooth enable/disable
     if (Platform.isAndroid) {
-      await FlutterBluePlus.turnOn();
+      //await FlutterBluePlus.turnOn();
     }
 
 // cancel to prevent duplicate listeners
